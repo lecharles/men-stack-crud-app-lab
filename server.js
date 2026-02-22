@@ -71,6 +71,12 @@ app.put("/skills/:id", async (req, res) => { // thx to method-override
     res.redirect("/skills/" + req.params.id); // redirect to show page for that skill
 });
 
+// DELETE route - delete one skill from db + redirect to index
+app.delete("/skills/:id", async (req, res) => {
+    await Skill.findByIdAndDelete(req.params.id);
+    res.redirect("/skills");
+});
+
 // listen for requests
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

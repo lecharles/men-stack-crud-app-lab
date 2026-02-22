@@ -13,6 +13,10 @@
     <nav>
         <a href="/skills">Back to All Skills</a>
         <a href="/skills/<%= skill._id %>/edit">Edit Skill</a>
+        <!-- similar to PUT, we use a form with POST method and ?_method=DELETE to let method-override middleware treat it as a DELETE request. -->
+        <form action="/skills/<%= skill._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit">Delete Skill</button>
+        </form>
     </nav>
 </body>
 </html>
