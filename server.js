@@ -47,10 +47,16 @@ app.get("/skills/new", (req, res) => {
     res.render("skills/new.ejs");
 });
 
-// CREATE route - take data from NEW form & create new skill in db. redirect to all skills page after creation
+// CREATE route - take data from NEW form & create new skill in db + redirect to index
 app.post("/skills", async (req, res) => {
     await Skill.create(req.body); 
     res.redirect("/skills"); 
+});
+
+// SHOW route - show details about one skill
+app.get("/skills/:id", async (req, res) => {
+    const skill = await Skill.findById(req.params.id); // find skill by id from url params
+    res.render("skills/show.ejs", { skill }); // pass skill to show.ejs to use in rendering page
 });
 
 // listen for requests

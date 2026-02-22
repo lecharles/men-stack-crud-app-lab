@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= skill.name %></title>
+</head>
+<body>
+    <h1><%= skill.name %></h1>
+    <p><%= skill.description %></p>
+    <img src="<%= skill.image %>" alt="<%= skill.name %>">
+    <br><br>
+    <nav>
+        <a href="/skills">Back to All Skills</a>
+        <a href="/skills/<%= skill._id %>/edit">Edit Skill</a>
+    </nav>
+</body>
+</html>
