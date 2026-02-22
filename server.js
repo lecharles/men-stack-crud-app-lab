@@ -11,3 +11,15 @@ const app = express(); // create
 // middleware
 app.use(express.urlencoded({ extended: false })); // parse html form data into req.body
 app.use(methodOverride("_method")); // allow form to send PUT and DELETE requests
+
+// routes
+
+// home page
+app.get("/", (req, res) => {
+    res.render("home.ejs");
+});
+
+// test route
+app.get("/test", (req, res) => {
+    res.send("test route working");
+});
