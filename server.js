@@ -6,6 +6,7 @@ require("dotenv").config(); // load .env file and add env vars to process.env
 const express = require("express");  
 const methodOverride = require("method-override"); // bc html forms support get & post only. it allows put and delete methods
 const mongoose = require("mongoose");
+const Skill = require("./models/skill.js"); // import skill model to use it in routes
 
 const app = express(); // create
 
@@ -32,6 +33,17 @@ app.get("/", (req, res) => {
 // test route
 app.get("/test", (req, res) => {
     res.send("test route working");
+});
+
+// NEW route - show form to create new skill
+app.get("/skills/new", (req, res) => {
+    res.render("skills/new.ejs");
+});
+
+// CREATE route - take data from NEW form & create new skill in db. redirect to all skills page after creation
+app.post("/skills", async (req, res) => {
+    await Skill.create(req.body); 
+    res.redirect("/skills"); 
 });
 
 // listen for requests
