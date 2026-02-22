@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Skills</title>
+</head>
+<body>
+    <h1>All Skills</h1>
+
+    <nav>
+        <a href="/">Home</a> | 
+        <a href="/skills/new">Add New Skill</a>
+    </nav>
+
+    <br>
+
+    <!-- check hasSkills -->
+    <% if (!hasSkills) { %>
+        <p>No skills yet. Add one!</p>
+    <% } %>
+
+    <!-- iterate over skills, display as links to show pages -->
+    <ul>
+        <% skills.forEach(skill => { %>
+            <li><a href="/skills/<%= skill._id %>"><%= skill.name %></a></li>
+        <% }) %>
+    </ul>
+    
+</body>
+</html>

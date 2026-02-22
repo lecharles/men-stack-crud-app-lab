@@ -35,6 +35,13 @@ app.get("/test", (req, res) => {
     res.send("test route working");
 });
 
+// INDEX route - show all skills
+app.get("/skills", async (req, res) => {
+    const allSkills = await Skill.find({}); // find all skills in db
+    const hasSkills = allSkills.length > 0; // check if there are any skills in db
+    res.render("skills/index.ejs", { skills: allSkills, hasSkills }); // pass all skills and hasSkills boolean to index.ejs to use in rendering page
+});
+
 // NEW route - show form to create new skill
 app.get("/skills/new", (req, res) => {
     res.render("skills/new.ejs");
