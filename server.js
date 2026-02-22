@@ -55,8 +55,20 @@ app.post("/skills", async (req, res) => {
 
 // SHOW route - show details about one skill
 app.get("/skills/:id", async (req, res) => {
-    const skill = await Skill.findById(req.params.id); // find skill by id from url params
-    res.render("skills/show.ejs", { skill }); // pass skill to show.ejs to use in rendering page
+    const skill = await Skill.findById(req.params.id); // find skill by id from url params in db
+    res.render("skills/show.ejs", { skill }); // pass skill to show.ejs to use in rendering page with details about that skill
+});
+
+// EDIT route - show form to edit one skill
+app.get("/skills/:id/edit", async (req, res) => {
+    const skill = await Skill.findById(req.params.id); 
+    res.render("skills/edit.ejs", { skill }); // pass it to edit.ejs for rendering form with pre-filled values from db
+});
+
+// UPDATE route - take data from EDIT form & update skill in db + redirect to SHOW page
+app.put("/skills/:id", async (req, res) => { // thx to method-override
+    await Skill.findByIdAndUpdate(req.params.id, req.body); // find by id from url param + update it with data from form (req.body)
+    res.redirect("/skills/" + req.params.id); // redirect to show page for that skill
 });
 
 // listen for requests

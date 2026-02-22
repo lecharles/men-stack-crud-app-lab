@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit <%= skill.name %></title>
+</head>
+<body>
+    <h1>Edit <%= skill.name %>
+    </h1>
+    
+    <form action="/skills/<%= skill._id %>?_method=PUT" method="POST"> 
+        <!-- still uses POST bc HTML forms only support GET and POST. but ?_method=PUT tells method-override middleware to treat it as a PUT request -->
+        <label for="name">Skill Name:</label><br>
+        <input type="text" id="name" name="name" value="<%= skill.name %>" required><br><br>
+        <!-- pre-filled with current value from db -->
+    
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required><%= skill.description %></textarea><br><br>
+    
+        <label for="image">Image URL:</label><br>
+        <input type="text" id="image" name="image" value="<%= skill.image %>"><br><br>
+    
+        <button type="submit">Update Skill</button>
+    </form>
+    
+    <br>
+    <a href="/skills/<%= skill._id %>">Cancel</a>
+</body>
+</html>
