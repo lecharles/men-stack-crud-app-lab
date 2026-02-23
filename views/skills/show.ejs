@@ -8,7 +8,9 @@
 <body>
     <h1><%= skill.name %></h1>
     <p><%= skill.description %></p>
-    <img src="<%= skill.image %>" alt="<%= skill.name %>">
+    <% if (skill.image) { %>
+        <img src="<%= skill.image %>" alt="<%= skill.name %>">
+    <% } %>
     <br><br>
     <nav>
         <a href="/skills">Back to All Skills</a>

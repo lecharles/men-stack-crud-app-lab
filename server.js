@@ -37,9 +37,14 @@ app.get("/test", (req, res) => {
 
 // INDEX route - show all skills
 app.get("/skills", async (req, res) => {
-    const allSkills = await Skill.find({}); // find all skills in db
-    const hasSkills = allSkills.length > 0; // check if there are any skills in db
-    res.render("skills/index.ejs", { skills: allSkills, hasSkills }); // pass all skills and hasSkills boolean to index.ejs to use in rendering page
+    try {
+        const allSkills = await Skill.find({}); // find all skills in db
+        const hasSkills = allSkills.length > 0; // check if there are any skills in db
+        res.render("skills/index.ejs", { skills: allSkills, hasSkills }); // pass all skills and hasSkills boolean to index.ejs to use in rendering page
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // NEW route - show form to create new skill
@@ -49,32 +54,57 @@ app.get("/skills/new", (req, res) => {
 
 // CREATE route - take data from NEW form & create new skill in db + redirect to index
 app.post("/skills", async (req, res) => {
-    await Skill.create(req.body); 
-    res.redirect("/skills"); 
+    try {
+        await Skill.create(req.body); 
+        res.redirect("/skills"); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // SHOW route - show details about one skill
 app.get("/skills/:id", async (req, res) => {
-    const skill = await Skill.findById(req.params.id); // find skill by id from url params in db
-    res.render("skills/show.ejs", { skill }); // pass skill to show.ejs to use in rendering page with details about that skill
+    try {
+        const skill = await Skill.findById(req.params.id); // find skill by id from url params in db
+        res.render("skills/show.ejs", { skill }); // pass skill to show.ejs to use in rendering page with details about that skill
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // EDIT route - show form to edit one skill
 app.get("/skills/:id/edit", async (req, res) => {
-    const skill = await Skill.findById(req.params.id); 
-    res.render("skills/edit.ejs", { skill }); // pass it to edit.ejs for rendering form with pre-filled values from db
+    try {
+        const skill = await Skill.findById(req.params.id); 
+        res.render("skills/edit.ejs", { skill }); // pass it to edit.ejs for rendering form with pre-filled values from db
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // UPDATE route - take data from EDIT form & update skill in db + redirect to SHOW page
 app.put("/skills/:id", async (req, res) => { // thx to method-override
-    await Skill.findByIdAndUpdate(req.params.id, req.body); // find by id from url param + update it with data from form (req.body)
-    res.redirect("/skills/" + req.params.id); // redirect to show page for that skill
+    try {
+        await Skill.findByIdAndUpdate(req.params.id, req.body); // find by id from url param + update it with data from form (req.body)
+        res.redirect("/skills/" + req.params.id); // redirect to show page for that skill
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // DELETE route - delete one skill from db + redirect to index
 app.delete("/skills/:id", async (req, res) => {
-    await Skill.findByIdAndDelete(req.params.id);
-    res.redirect("/skills");
+    try {
+        await Skill.findByIdAndDelete(req.params.id);
+        res.redirect("/skills");
+    } catch (error) {
+        console.log(error);
+        res.status(500).render("error.ejs", { error: error.message }); // render error page with error message
+    }
 });
 
 // listen for requests
